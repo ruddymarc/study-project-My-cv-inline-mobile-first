@@ -7,11 +7,28 @@ $active-link: hsla(0, 0%, 50%, .6);
 $heading-font: small-caps bold 1.1em/.8 cursive;
 $nav-font: small-caps bold 1.1em/1 Arial, Helvetica, sans-serif;
 $shadow-light: 2px 2px 2px 1px #d6d6d6, 2px -2px 2px 1px #d6d6d6;
+$address-icons: \f095, \f099, \f2b6, \f3c5;
+$icons-fa-font: 'Font Awesome 6 Brands', 'Font Awesome 6 Free';
+$labels: assignment association language leisure reading software;
+$labels-name: (
+  'assignment': 'Mission',
+  'association': 'Association',
+  'language': 'Langue',
+  'leisure': 'Loisir',
+  'reading': 'Lecture',
+  'software': 'Logiciel'
+);
 %flex-centered {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+@import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/solid.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/brands.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/fontawesome.min.css);
+
 /* Positionnement mobile */
 body {
   height: 100vh;
@@ -70,10 +87,93 @@ h1::before {
 main > section {
   display: none;
 }
+
+/* Stylling contact-list */
+.contact-list {
+  padding: 1.2em;
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  li {
+    position: relative;
+    margin-bottom: $margin-default;
+  }
+  @each $icon in $address-icons {
+    $i: index($address-icons, $icon);
+    li:nth-child(#{$i})::before {
+      font-family: $icons-fa-font;
+      content: "#{$icon}";
+      display: block;
+      width: 1em; height: 1em;
+      position: absolute;
+      top: 0;
+      left: -1.2em;
+    }
+  }
+}
+.show-sm {
+  display: none;
+}
+
 @each $section in presentation projects career contact {
   nav:has(##{$section}:checked) ~ main > .#{$section} {
     display: block;
   }
+}
+
+/* Styling flexible containers */
+.presentation ul {
+  list-style-type: '\2668';
+  li {
+    margin: $margin-default 0;
+  }
+}
+.flex-wrap {
+  @extend %flex-centered;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+/* Stylling labels */
+@each $label in $labels {
+  $content: map-get($map: $labels-name, $key: $label);
+  .#{$label} {
+    display: flex;
+    gap: .2em;
+    &::before {
+      content: '#{$content}\00a0:';
+      font-weight: bold;
+    }
+  }
+}
+.software > .flex-wrap {
+  width: 80%;
+}
+
+/* Stylling activity event */
+.activity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: .5em;
+  padding: .5em 1em;
+  border-width: 1em;
+  border-color: hsla(0, 0%, 50%, .8);
+  border-left: solid;
+  .sub-headding {
+    color: #52BE80;
+  }
+  .headding,
+  p {
+    margin: 0;
+  }
+}
+
+/* Stylling very big icons */
+.fa-brands {
+  font-size: 3.8em;
+  margin: 0 .6em;
 }
 
 @media screen and (min-width: $break-point) {
@@ -110,6 +210,53 @@ main > section {
   .tab-nav input[type="radio"]:checked + label {
     color: hsla(0, 50%, 100%, .6);
   }
+
+  /* Stylling contact-list */
+  .contact-list {
+    flex-direction: column;
+  }
+  .show-sm {
+    display: block;
+  }
+
+  /* Stylling flexible containers */
+  .presentation {
+    h3,
+    h3 ~ * {
+      width: 100%;
+      max-width: 36rem;
+      box-sizing: border-box;
+    }
+    h3:nth-of-type(2n),
+    h3:nth-of-type(2n) ~ * {
+      display: block;
+      margin-left: auto;
+    }
+  }
+  figcaption,
+  figure img {
+    width: 100%;
+    max-width: 22em;
+  }
+  figure:nth-child(odd) figcaption {
+    order: -1;
+  }
+
+  /* Stylling activity event */
+  .activity {
+    width: 49.333333%;
+    box-sizing: border-box;
+    &:nth-child(even) {
+      align-items: flex-end;
+      text-align: right;
+      border-left: none;
+      border-right: solid;
+    }
+    &:nth-child(odd) {
+      margin-left: auto;
+    }
+  }
+
   /* Positionnement (tablette portrait) */
   @media (position: portrait) {
     body {
