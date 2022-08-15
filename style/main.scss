@@ -1,5 +1,12 @@
 /* Definition de constantes */
 $break-point: 720px;
+$margin-default: .8em;
+$dark: #34495E;
+$light: #FBFCFC;
+$active-link: hsla(0, 0%, 50%, .6);
+$heading-font: small-caps bold 1.1em/.8 cursive;
+$nav-font: small-caps bold 1.1em/1 Arial, Helvetica, sans-serif;
+$shadow-light: 2px 2px 2px 1px #d6d6d6, 2px -2px 2px 1px #d6d6d6;
 %flex-centered {
   display: flex;
   align-items: center;
@@ -16,38 +23,97 @@ body {
   }
 }
 
+/* Stylling header component */
+h1, h2 {
+  font: $heading-font;
+  text-align: center;
+}
+h1::before {
+  content: '';
+  display: block;
+  width: 6.4rem;
+  height: 6.4rem;
+  position: sticky;
+  margin: 1em auto;
+  border-radius: .5em;
+  background-color: #d6d6d6;
+  background: top/cover url(../images/photo-profile.jpeg);
+}
+.sub-headding {
+  display: block;
+  color: hsla(0, 0%, 50%, .8);
+}
+
+/* Stylling navbar componenet */
+.tab-nav {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  input[type="radio"] {
+    display: none;
+    &:checked + label {
+      color: $active-link;
+      border-bottom: medium solid $active-link;
+    }
+  }
+  label:hover {
+    cursor: pointer;
+    color: $active-link;
+    border-bottom: medium solid $active-link;
+  }
+}
+
+/* Annimate sections on nav change */
+main > section {
+  display: none;
+}
+@each $section in presentation projects career contact {
+  nav:has(##{$section}:checked) ~ main > .#{$section} {
+    display: block;
+  }
+}
+
 @media screen and (min-width: $break-point) {
   /* Positionnement (tablette laptop) */
   body {
     display: grid;
+    gap: $margin-default;
     grid-template-columns: [start] 1fr [first-col] 3fr [end];
     grid-template-rows: [start] 3rem [top] 3rem [bottom] auto [end];
     &> header {
       grid-column: start;
       grid-row: start / end;
+      background-color: $dark;
+      color: $light;
+      text-align: justify;
     }
     &> nav {
       grid-column: start / end;
       grid-row: top;
       order: initial;
       padding-left: 20%;
+      background-color: $dark;
+      color: $light;
+      box-shadow: $shadow-light;
     }
     &> main {
       grid-column: first-col / end;
       grid-row: bottom / end;
+      overflow-x: scroll;
     }
   }
 
+  /* Stylling navbar componenet */
+  .tab-nav input[type="radio"]:checked + label {
+    color: hsla(0, 50%, 100%, .6);
+  }
   /* Positionnement (tablette portrait) */
   @media (position: portrait) {
     body {
       grid-template-columns: [start] 1fr [first-col] 2fr [end];
     }
   }
-}
-
-/* Materialize compoennet */
-:is(header, main, nav) {
-  @extend %flex-centered;
-  border: thin solid hsl(0, 0%, 50);
 }
