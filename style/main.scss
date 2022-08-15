@@ -1,0 +1,53 @@
+/* Definition de constantes */
+$break-point: 720px;
+%flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Positionnement mobile */
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  &> nav {
+    order: -1;
+    @extend %flex-centered;
+  }
+}
+
+@media screen and (min-width: $break-point) {
+  /* Positionnement (tablette laptop) */
+  body {
+    display: grid;
+    grid-template-columns: [start] 1fr [first-col] 3fr [end];
+    grid-template-rows: [start] 3rem [top] 3rem [bottom] auto [end];
+    &> header {
+      grid-column: start;
+      grid-row: start / end;
+    }
+    &> nav {
+      grid-column: start / end;
+      grid-row: top;
+      order: initial;
+      padding-left: 20%;
+    }
+    &> main {
+      grid-column: first-col / end;
+      grid-row: bottom / end;
+    }
+  }
+
+  /* Positionnement (tablette portrait) */
+  @media (position: portrait) {
+    body {
+      grid-template-columns: [start] 1fr [first-col] 2fr [end];
+    }
+  }
+}
+
+/* Materialize compoennet */
+:is(header, main, nav) {
+  @extend %flex-centered;
+  border: thin solid hsl(0, 0%, 50);
+}
