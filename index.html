@@ -179,6 +179,17 @@
 
     <section class="contact">
       <h3>Posez nous vos question !</h3>
+      <form class="vertical-form" method="post">
+        <input type="text" name="fullName" id="fullName" placeholder="Nom & Prénom">
+        <input type="email" name="email" placeholder="Email">
+        <input type="text" name="phoneNumber" placeholder="Numéro de téléphone">
+        <select name="category">
+          <option value="">Selectionner une catégorie</option>
+          <option value="contact-pro">Contact professionnel</option>
+          <option value="contact-help">Aide</option>
+        </select>
+        <textarea name="message" rows="5" placeholder="Votre message"></textarea>
+        <button class="send-button">Envoyer</button>
     </section>
   </main>
 </body>

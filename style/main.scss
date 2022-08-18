@@ -38,6 +38,9 @@ body {
     order: -1;
     @extend %flex-centered;
   }
+  :is(header, main) {
+    padding: 0 .5em;
+  }
 }
 
 /* Stylling header component */
@@ -140,7 +143,7 @@ main > section {
   $content: map-get($map: $labels-name, $key: $label);
   .#{$label} {
     display: flex;
-    gap: .2em;
+    align-items: flex-start;
     &::before {
       content: '#{$content}\00a0:';
       font-weight: bold;
@@ -174,6 +177,53 @@ main > section {
 .fa-brands {
   font-size: 3.8em;
   margin: 0 .6em;
+}
+
+/* Stylling button */
+button,
+.btn {
+  @extend %flex-centered;
+  flex-wrap: wrap;
+  border-radius: .5em;
+  &:hover {
+    background: transparent;
+    border: outset hsla(0, 0%, 50%, .8);
+    cursor: pointer;
+    color: inherit;
+  }
+}
+
+/* Stylling vertical form */
+.vertical-form {
+  width: 100%;
+  max-width: $break-point;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  background: inherit;
+  input,
+  select,
+  textarea {
+    font-size: 1.1em;
+    margin-bottom: 1.2rem;
+    border: none;
+    border-bottom: .2em solid $dark;
+  }
+  textarea {
+    border-top: .1em solid $dark;
+  }
+  select {
+    color: hsla(0, 0%, 50%, .8);
+  }
+}
+.send-button {
+  background-color: #52BE80;
+  color: $light;
+  width: 80%;
+  margin: auto;
+  &::after {
+    content: '\2002\21D7';
+  }
 }
 
 @media screen and (min-width: $break-point) {
